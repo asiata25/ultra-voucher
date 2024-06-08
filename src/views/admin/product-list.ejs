@@ -1,0 +1,26 @@
+<%- include('../layouts/header.ejs'); %>
+<div class="mt-5 pt-5 container">
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <img src="/images/book.jpg" class="card-img-top" />
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <div class="d-flex column-gap-3">
+            <form action="/cart" method="post">
+              <input type="hidden" name="productId" value="BOOK">
+              <button class="btn btn-success"
+                ><i class="bi bi-cart-plus-fill"></i
+              ></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../layouts/footer.ejs'); %>
