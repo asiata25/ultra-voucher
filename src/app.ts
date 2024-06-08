@@ -4,9 +4,7 @@ import path from "path";
 import { ErrorController } from "./controllers/error";
 import { adminRoutes } from "./routes/admin";
 import { shopRoutes } from "./routes/shop";
-import { db } from "./util/database";
-import { Product } from "./model/product-model";
-import { User } from "./model/user-model";
+import { mongoConnect } from "./util/database";
 
 const app = express();
 
@@ -26,18 +24,10 @@ app.use(shopRoutes);
 // page not found
 app.use(ErrorController.getNotFoundPage);
 
-
-Product.belongsTo(User)
-User.hasMany(Product)
-
 const port = 3000;
-db
-  .sync()
-  .then(() => {
-    app.listen(port, () => {
-      console.log("listening on port:", port);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
+
+mongoConnect(() => {
+  app.listen(port, () => {
+    console.log("listening on port:", port);
   });
+});

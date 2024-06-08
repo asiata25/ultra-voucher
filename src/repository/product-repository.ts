@@ -1,18 +1,11 @@
-import { CreateProductRequest, Product } from "../model/product-model";
+import { getDb } from "../util/database";
 
 export class ProductRepository {
   static getAll() {
-    return Product.findAll({
-      attributes: ["id", "title", "description", "price", "image_url"],
-    });
+    const db = getDb()
+    return db.collection("products").find().toArray()
   }
 
-  static save(product: CreateProductRequest) {
-    return Product.create({
-      title: product.title,
-      price: product.price,
-      description: product.description,
-      imageUrl: product.imageUrl,
-    });
+  static save() {
   }
 }

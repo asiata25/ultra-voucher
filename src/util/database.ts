@@ -1,20 +1,27 @@
-import { Sequelize } from "sequelize";
-import { Product } from "../model/product-model";
-import { User } from "../model/user-model";
+import { MongoClient, Db } from "mongodb";
 
-export const db = new Sequelize({
-  database: "belajar_node",
-  username: "root",
-  password: "",
-  host: "localhost",
-  dialect: "mysql",
+const client = new MongoClient(
+  "mongodb+srv://lutfikhoir:CGpdp6PyhsGD0BXN@cluster0.4l543qs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+);
+
+let db: Db;
+
+export const mongoConnect = (callback: () => void) => {
+  client
+    .connect()
+    .then(() => {
+      console.log("Successfully connected");
+      db = client.db("belajar_node");
+      callback();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getDb = () => {
+  if (db) {
+    return db;
+  }
+
+  throw new Error("No database found!");
   
-});
-
-db.authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });
+};
