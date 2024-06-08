@@ -3,7 +3,7 @@ import { ProductRepository } from "../repository/product-repository";
 
 export class ShopController {
   static getAllProducts(req: Request, res: Response, next: NextFunction) {
-    ProductRepository.getAll().then(([products]) => {
+    ProductRepository.getAll().then((products) => {
       res.render("shop/product-list", {
         pageTitle: "Shopiingg",
         path: "/shop",
@@ -17,8 +17,8 @@ export class ShopController {
     const price = +req.body.price
     const description = req.body.description
     const image_url = req.body.image_url
-    
-    ProductRepository.save({title, price, description, image_url}).then(() => {
+
+    ProductRepository.save({title, price, description, imageUrl: image_url}).then(() => {
       res.redirect("/")
     }).catch(err => console.log(err))
   }

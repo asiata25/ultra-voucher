@@ -1,15 +1,18 @@
-import { CreateProductReq, Product } from "../model/product-model";
-import { db } from "../util/database";
+import { CreateProductRequest, Product } from "../model/product-model";
 
 export class ProductRepository {
   static getAll() {
-    return db.query<Product[]>("SELECT * FROM products");
+    return Product.findAll({
+      attributes: ["id", "title", "description", "price", "image_url"],
+    });
   }
 
-  static save(product: CreateProductReq) {
-    return db.execute(
-      "INSERT INTO products (title, price, description, image_url) VALUES (?, ?, ?, ?)",
-      [product.title, product.price, product.description, product.image_url]
-    );
+  static save(product: CreateProductRequest) {
+    return Product.create({
+      title: product.title,
+      price: product.price,
+      description: product.description,
+      imageUrl: product.imageUrl,
+    });
   }
 }

@@ -1,12 +1,20 @@
-import mysql from "mysql2";
+import { Sequelize } from "sequelize";
+import { Product } from "../model/product-model";
+import { User } from "../model/user-model";
 
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
+export const db = new Sequelize({
   database: "belajar_node",
-  connectionLimit: 100,
-  maxIdle: 10,
-  idleTimeout: 300000,
+  username: "root",
+  password: "",
+  host: "localhost",
+  dialect: "mysql",
+  
 });
 
-export const db = pool.promise()
+db.authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });
